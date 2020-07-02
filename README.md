@@ -34,8 +34,8 @@ docker-compose up
 ```
 
 Endpoints:
-- http://localhost:8080/diff/<ID>/left
-- http://localhost:8080/diff/<ID>/right
+- http://localhost:8080/diff/#ID/left
+- http://localhost:8080/diff/#ID/right
 
 Json content
 ```
@@ -45,7 +45,7 @@ Json content
 ```
 
 
-- http://localhost:8080/diff/<ID>
+- http://localhost:8080/diff/#ID
 
 ## Suggestions for improvements
 - More code coverage.
