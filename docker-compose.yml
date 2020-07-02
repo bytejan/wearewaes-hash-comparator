@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+  hash-comparator:
+    volumes:
+      - ./docker/mysql-volumes:/var/lib/mysql
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=hash-comparator
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306:3306
