@@ -24,7 +24,7 @@ public class HashCompareResource {
                                    @Valid @RequestBody HashDTO hash) throws HashPositionAlreadyExistException {
 
         hashService.saveHash(hashId, hash.getHash(), position.toString());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("ok");
     }
 
     @GetMapping("/{hashId}")

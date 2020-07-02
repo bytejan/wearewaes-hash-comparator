@@ -18,25 +18,19 @@ public class GlobalRestExceptionHandler {
     @ExceptionHandler({ HttpMessageNotReadableException.class })
     public ResponseEntity<Object> handleNotReadableException(
             HttpMessageNotReadableException ex, WebRequest request) {
-        String error = ex.getMessage();
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
-        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+        return this.getError(ex, request);
     }
 
     @ExceptionHandler({ HashPositionAlreadyExistException.class })
     public ResponseEntity<Object> HandleHashPositionAlreadyExistException(
             RuntimeException ex, WebRequest request) {
-        String error = ex.getMessage();
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
-        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+        return this.getError(ex, request);
     }
 
     @ExceptionHandler({ MissingHashException.class })
     public ResponseEntity<Object> HandleMissingHashException(
             RuntimeException ex, WebRequest request) {
-        String error = ex.getMessage();
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
-        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+        return this.getError(ex, request);
     }
 
     @ExceptionHandler({ InvalidBase64Exception.class })

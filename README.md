@@ -37,7 +37,7 @@ Endpoints:
 - http://localhost:8080/v1/diff/#ID/left
 - http://localhost:8080/v1/diff/#ID/right
 
-Json content
+Json payload:
 ```
 {
  "hash": "<base64>"
@@ -54,4 +54,5 @@ Json content
 - Lombok
 - Sonarqube integration (gradle)
 - Swagger / open api
+- One wrapper DTO for response and error.
 
