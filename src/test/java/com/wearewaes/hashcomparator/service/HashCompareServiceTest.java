@@ -44,7 +44,6 @@ public class HashCompareServiceTest {
         // Given.
         CompareResultDTO result =  hashCompareService.compare(VALID_BASE64, VALID_BASE64);
 
-
         // Then.
         assertEquals(result.getErrors().size(), 0);
         assertEquals(result.isEqual(), true);
