@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: hash-comparator-prod
   devtools:
     restart:
       enabled: false

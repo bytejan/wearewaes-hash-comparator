@@ -2,7 +2,7 @@ spring:
   application:
     name: hash-comparator
   profiles:
-    active: prod
+    active: dev
   data:
     jpa:
       repositories:
