@@ -21,5 +21,4 @@ spring:
         useServerPrepStmts: true
   jpa:
     show-sql: false
-  liquibase:
-    contexts: prod
+    hibernate.ddl-auto: update
