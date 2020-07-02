@@ -18,7 +18,7 @@ All traffic would go through the api gateway and all microservices would have th
 
 On top I would have made an e2e test in Cypress and a deployment script for kubernetes.
 
-## current architecture 
+## How to run the application
 
 Run with h2 database (dev profile)
 ```
@@ -32,6 +32,20 @@ docker-compose up
 ./gradlew bootRun --args='--spring.profiles.active=prod'
 
 ```
+
+Endpoints:
+- http://localhost:8080/diff/<ID>/left
+- http://localhost:8080/diff/<ID>/right
+
+Json content
+```
+{
+ "hash": "<base64>"
+}
+```
+
+
+- http://localhost:8080/diff/<ID>
 
 ## Suggestions for improvements
 - More code coverage.
