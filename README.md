@@ -53,4 +53,5 @@ Json content
 - Jacoco 
 - Lombok
 - Sonarqube integration (gradle)
+- Swagger / open api
 
