@@ -12,6 +12,16 @@ import java.util.List;
 @Service
 public class HashCompareService {
 
+    /**
+     * Compare 2 hashes and return the the position of the errors and offset.
+     *
+     * @param leftHash  left base 64 hash
+     * @param rightHash right base 64 hash
+     *
+     * @return The result of the comparision.
+     *
+     * @throws InvalidBase64Exception
+     */
     public CompareResultDTO compare(String leftHash, String rightHash) throws InvalidBase64Exception {
         List<DiffErrorDTO> errors = new ArrayList<>();
         char[] hash1chars;

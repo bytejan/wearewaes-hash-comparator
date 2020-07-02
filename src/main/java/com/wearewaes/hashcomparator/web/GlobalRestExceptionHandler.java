@@ -1,5 +1,6 @@
 package com.wearewaes.hashcomparator.web;
 
+import com.wearewaes.hashcomparator.exceptions.HashPositionAlreadyExistException;
 import com.wearewaes.hashcomparator.web.dto.ApiError;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,19 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalRestExceptionHandler {
 
     @ExceptionHandler({ HttpMessageNotReadableException.class })
-    public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
+    public ResponseEntity<Object> handleNotReadableException(
             HttpMessageNotReadableException ex, WebRequest request) {
         String error = ex.getMessage();
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
+
+    @ExceptionHandler({ HashPositionAlreadyExistException.class })
+    public ResponseEntity<Object> HandleHashPositionAlreadyExistException(
+            RuntimeException ex, WebRequest request) {
+        String error = ex.getMessage();
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
 }

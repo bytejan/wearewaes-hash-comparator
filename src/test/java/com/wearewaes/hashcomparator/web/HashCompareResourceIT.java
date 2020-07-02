@@ -3,6 +3,7 @@ package com.wearewaes.hashcomparator.web;
 import com.wearewaes.hashcomparator.HashComparatorApplication;
 import com.wearewaes.hashcomparator.domain.Hash;
 import com.wearewaes.hashcomparator.repository.HashRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,9 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -31,6 +32,11 @@ public class HashCompareResourceIT {
         restAccountMockMvc.perform(get("/v1/diff/hash1/right")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @BeforeEach
+    public void init() {
+        hashRepository.deleteAll();
     }
 
     @Test
@@ -57,5 +63,28 @@ public class HashCompareResourceIT {
         assertEquals(hash.getHash(), "d2VhcmV3YWVz");
         assertEquals(hash.getHashVersion(), hashVersion);
         assertEquals(hash.getPosition(), position);
+    }
+
+    @Test
+    public void whenHashIsAlreadySaved_thenShouldReturnError() throws Exception {
+        // Given.
+        String hashVersion = "12343";
+        String position = "right";
+
+        Hash hash = new Hash();
+        hash.setHashVersion(hashVersion);
+        hash.setPosition(position);
+        hash.setHash("myhash");
+        hashRepository.save(hash);
+
+        // When.
+        restAccountMockMvc.perform(get("/v1/diff/" + hashVersion + "/" + position)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"hash\": \"d2VhcmV3YWVz\"}")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("The right hash with id 12343 does already exist"))
+                .andExpect(status().isBadRequest());
+
+        // Then.
+        assertEquals(hashRepository.findAll().size(), 1);
     }
 }

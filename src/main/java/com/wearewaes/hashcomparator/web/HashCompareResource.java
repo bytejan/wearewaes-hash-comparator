@@ -1,6 +1,7 @@
 package com.wearewaes.hashcomparator.web;
 
 import com.wearewaes.hashcomparator.domain.Position;
+import com.wearewaes.hashcomparator.exceptions.HashPositionAlreadyExistException;
 import com.wearewaes.hashcomparator.service.HashService;
 import com.wearewaes.hashcomparator.web.dto.HashDTO;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,9 @@ public class HashCompareResource {
 
     @GetMapping("/{hashId}/{position}")
     public ResponseEntity saveHash(@PathVariable String hashId, @PathVariable Position position,
-                                   @Valid @RequestBody HashDTO hash) {
+                                   @Valid @RequestBody HashDTO hash) throws HashPositionAlreadyExistException {
 
-        hashService.saveHash(hashId, hash.getHash(), position);
+        hashService.saveHash(hashId, hash.getHash(), position.toString());
         return ResponseEntity.ok().build();
     }
 }
