@@ -28,4 +28,40 @@ public class Hash  implements Serializable {
     @NotNull
     @Column(length = 300, nullable = false)
     private String position;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getHashVersion() {
+        return hashVersion;
+    }
+
+    public void setHashVersion(String hashVersion) {
+        this.hashVersion = hashVersion;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 }
