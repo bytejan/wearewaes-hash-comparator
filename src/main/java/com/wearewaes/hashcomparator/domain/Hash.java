@@ -45,23 +45,26 @@ public class Hash  implements Serializable {
         return hashVersion;
     }
 
-    public void setHashVersion(String hashVersion) {
+    public Hash setHashVersion(String hashVersion) {
         this.hashVersion = hashVersion;
+        return this;
     }
 
     public String getHash() {
         return hash;
     }
 
-    public void setHash(String hash) {
+    public Hash setHash(String hash) {
         this.hash = hash;
+        return this;
     }
 
     public String getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public Hash setPosition(String position) {
         this.position = position;
+        return this;
     }
 }

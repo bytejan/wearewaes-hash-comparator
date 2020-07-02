@@ -39,10 +39,10 @@ public class HashService {
             throw new InvalidBase64Exception("hash is not a valid base 64");
         }
 
-        Hash hash = new Hash();
-        hash.setHash(hashString);
-        hash.setPosition(position);
-        hash.setHashVersion(hashVersion);
+        Hash hash = new Hash()
+                .setHash(hashString)
+                .setPosition(position)
+                .setHashVersion(hashVersion);
         hashRepository.save(hash);
     }
 
