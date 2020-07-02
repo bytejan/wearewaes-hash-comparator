@@ -20,7 +20,7 @@ public class HashCompareService {
      *
      * @return The result of the comparision.
      *
-     * @throws InvalidBase64Exception
+     * @throws InvalidBase64Exception Throws exception when one of the hashes is not a base64.
      */
     public CompareResultDTO compare(String leftHash, String rightHash) throws InvalidBase64Exception {
         List<DiffErrorDTO> errors = new ArrayList<>();

@@ -4,7 +4,7 @@ public enum Position {
     LEFT("left"),
     RIGHT("right");
 
-    private String positionName;
+    private final String positionName;
 
     Position(String positionName) {
         this.positionName = positionName;

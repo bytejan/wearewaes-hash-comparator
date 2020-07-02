@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RequestMapping("/v1/diff")
 public class HashCompareResource {
 
-    private HashService hashService;
+    private final HashService hashService;
 
     public HashCompareResource(HashService hashService) {
         this.hashService = hashService;

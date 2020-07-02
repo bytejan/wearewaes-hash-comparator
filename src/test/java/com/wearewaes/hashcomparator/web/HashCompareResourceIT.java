@@ -66,6 +66,18 @@ public class HashCompareResourceIT {
     }
 
     @Test
+    public void whenHashIsNotBase64_thenShouldThrowError() throws Exception {
+        // Given.
+        String hashVersion = "12343";
+        String position = "right";
+        restAccountMockMvc.perform(get("/v1/diff/" + hashVersion + "/" + position)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"hash\": \"weare#$ weas\"}")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("hash is not a valid base 64"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void whenHashIsAlreadySaved_thenShouldReturnError() throws Exception {
         // Given.
         String hashVersion = "12343";

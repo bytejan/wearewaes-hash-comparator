@@ -4,20 +4,19 @@ import com.wearewaes.hashcomparator.exceptions.InvalidBase64Exception;
 import com.wearewaes.hashcomparator.service.dto.CompareResultDTO;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HashCompareServiceTest {
 
-    private static String VALID_BASE64 = "d2VhcmV3YWVz";
-    private static String VALID_BASE64_NR2 = "d2GhcmV3YWVgd";
+    private static final String VALID_BASE64 = "d2VhcmV3YWVz";
+    private static final String VALID_BASE64_NR2 = "d2GhcmV3YWVgd";
 
-    private static String NON_VALID_BASE64 = "weare#$ weas";
+    private static final String NON_VALID_BASE64 = "weare#$ weas";
 
-    private static String LEFT_HASH_NOT_VALID_ERROR_MSG = "Left hash is not a valid base 64";
-    private static String RIGHT_HASH_NOT_VALID_ERROR_MSG = "Right hash is not a valid base 64";
+    private static final String LEFT_HASH_NOT_VALID_ERROR_MSG = "Left hash is not a valid base 64";
+    private static final String RIGHT_HASH_NOT_VALID_ERROR_MSG = "Right hash is not a valid base 64";
 
-    private HashCompareService hashCompareService = new HashCompareService();
+    private final HashCompareService hashCompareService = new HashCompareService();
 
     @Test
     void whenLeftHashNotBase64_thenShouldThrowError() {
@@ -46,7 +45,7 @@ public class HashCompareServiceTest {
 
         // Then.
         assertEquals(result.getErrors().size(), 0);
-        assertEquals(result.isEqual(), true);
+        assertTrue(result.isEqual());
     }
 
     @Test
@@ -62,7 +61,7 @@ public class HashCompareServiceTest {
 
         // Error 2 should have an offset from 2.
         assertEquals(result.getErrors().get(1).getOffset(), 2);
-        assertEquals(result.isEqual(), false);
+        assertFalse(result.isEqual());
     }
 
     @Test
@@ -78,6 +77,6 @@ public class HashCompareServiceTest {
 
         // Error 2 should have an offset from 2.
         assertEquals(result.getErrors().get(1).getOffset(), 2);
-        assertEquals(result.isEqual(), false);
+        assertFalse(result.isEqual());
     }
 }
