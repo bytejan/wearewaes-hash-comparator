@@ -20,13 +20,13 @@ On top I would have made an e2e test in Cypress and a deployment script for kube
 
 ## How to run the application
 
-Run with h2 database (dev profile)
+Run with h2 database (dev profile - h2db)
 ```
 ./gradlew bootRun
 ```
 
 
-Run with docker mysql database (prod profile) 
+Run with docker (prod profile - mysql) 
 ```
 docker-compose up
 ./gradlew bootRun --args='--spring.profiles.active=prod'
@@ -34,8 +34,8 @@ docker-compose up
 ```
 
 Endpoints:
-- http://localhost:8080/diff/#ID/left
-- http://localhost:8080/diff/#ID/right
+- http://localhost:8080/v1/diff/#ID/left
+- http://localhost:8080/v1/diff/#ID/right
 
 Json content
 ```
@@ -45,7 +45,7 @@ Json content
 ```
 
 
-- http://localhost:8080/diff/#ID
+- http://localhost:8080/v1/diff/#ID
 
 ## Suggestions for improvements
 - Higher code coverage.
