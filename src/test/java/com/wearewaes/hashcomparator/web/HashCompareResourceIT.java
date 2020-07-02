@@ -81,10 +81,75 @@ public class HashCompareResourceIT {
         restAccountMockMvc.perform(get("/v1/diff/" + hashVersion + "/" + position)
                 .contentType(MediaType.APPLICATION_JSON).content("{\"hash\": \"d2VhcmV3YWVz\"}")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value("The right hash with id 12343 does already exist"))
+                .andExpect(jsonPath("$.message").value("The right hash with id 12343 already exist"))
                 .andExpect(status().isBadRequest());
 
         // Then.
         assertEquals(hashRepository.findAll().size(), 1);
+    }
+
+    @Test
+    public void whenTryToGetHashResultWithFromAnUnknownId_thenShouldReturnError() throws Exception {
+        // Given.
+        String hashVersion = "12343";
+
+        // When.
+        restAccountMockMvc.perform(get("/v1/diff/" + hashVersion)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("Not all hashes for id 12343 are set"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void whenHashesAreSame_thenShouldReturnEqualResponse() throws Exception {
+        // Given.
+        String hashVersion = "12343";
+
+        Hash hash = new Hash();
+        hash.setHashVersion(hashVersion);
+        hash.setPosition("LEFT");
+        hash.setHash("d2VhcmV3YWVz");
+        hashRepository.save(hash);
+
+        Hash hash2 = new Hash();
+        hash2.setHashVersion(hashVersion);
+        hash2.setPosition("LEFT");
+        hash2.setHash("d2VhcmV3YWVz");
+        hashRepository.save(hash2);
+
+        // When / Then.
+        restAccountMockMvc.perform(get("/v1/diff/" + hashVersion)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.equal").value(true))
+                .andExpect(jsonPath("$.errors").isEmpty())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void whenHashesAreNotTheSame_thenShouldReturnDiffErrorResponse() throws Exception {
+        // Given.
+        String hashVersion = "12343";
+
+        Hash hash = new Hash();
+        hash.setHashVersion(hashVersion);
+        hash.setPosition("LEFT");
+        hash.setHash("a2VhcmV3YWVz");
+        hashRepository.save(hash);
+
+        Hash hash2 = new Hash();
+        hash2.setHashVersion(hashVersion);
+        hash2.setPosition("LEFT");
+        hash2.setHash("d2VhcmV3YWVzdd");
+        hashRepository.save(hash2);
+
+        // When / Then.
+        restAccountMockMvc.perform(get("/v1/diff/" + hashVersion)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.equal").value(false))
+                .andExpect(jsonPath("$.errors[0].position").value(1))
+                .andExpect(jsonPath("$.errors[0].offset").value(1))
+                .andExpect(jsonPath("$.errors[1].position").value(13))
+                .andExpect(jsonPath("$.errors[1].offset").value(2))
+                .andExpect(status().isOk());
     }
 }

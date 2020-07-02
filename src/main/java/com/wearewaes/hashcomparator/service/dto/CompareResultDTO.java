@@ -7,7 +7,7 @@ public class CompareResultDTO {
     public CompareResultDTO(List<DiffErrorDTO> errors) {
         this.errors = errors;
 
-        if (errors.size() == 0) {
+        if (errors == null || errors.size() == 0) {
             this.isEqual = true;
         } else {
             this.isEqual = false;

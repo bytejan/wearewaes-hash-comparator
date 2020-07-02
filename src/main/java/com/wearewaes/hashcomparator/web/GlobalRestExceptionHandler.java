@@ -1,6 +1,7 @@
 package com.wearewaes.hashcomparator.web;
 
 import com.wearewaes.hashcomparator.exceptions.HashPositionAlreadyExistException;
+import com.wearewaes.hashcomparator.exceptions.MissingHashException;
 import com.wearewaes.hashcomparator.web.dto.ApiError;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,4 +31,11 @@ public class GlobalRestExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
+    @ExceptionHandler({ MissingHashException.class })
+    public ResponseEntity<Object> HandleMissingHashException(
+            RuntimeException ex, WebRequest request) {
+        String error = ex.getMessage();
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
 }
