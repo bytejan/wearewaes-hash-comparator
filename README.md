@@ -48,7 +48,7 @@ Json content
 - http://localhost:8080/diff/#ID
 
 ## Suggestions for improvements
-- More code coverage.
+- Higher code coverage.
 - Better error handling
 - Jacoco 
 - Lombok
